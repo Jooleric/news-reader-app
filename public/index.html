@@ -4,16 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>News Reader App</title>
-  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  <header>
-    <h1>📰 News Reader</h1>
-    <input type="text" id="search" placeholder="Search for news...">
-  </header>
-
-  <main id="news-container"></main>
-
-  <script src="scripts/app.js"></script>
+  <div id="root"></div> <!-- React mounts here -->
+  <script type="module" src="/src/main.jsx"></script> <!-- Vite or CRA entry -->
 </body>
 </html>
