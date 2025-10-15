@@ -8,9 +8,12 @@ const Home = () => {
   const [query, setQuery] = useState("breaking-news");
 
   useEffect(() => {
-    fetchNews(query).then((data) => {
+    const getNews = async () => {
+      const data = await fetchNews(query);
       if (data?.articles) setArticles(data.articles);
-    });
+    };
+
+    getNews();
   }, [query]);
 
   return (

@@ -2,8 +2,10 @@ import React from "react";
 import NewsCard from "./NewsCard";
 
 const NewsList = ({ articles }) => {
+  if (!articles.length) return <p className="text-center">No articles found.</p>;
+
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {articles.map((article, index) => (
         <NewsCard key={index} article={article} />
       ))}
