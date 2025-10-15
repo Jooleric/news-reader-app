@@ -39,7 +39,7 @@ const Home = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-blue-50 p-6 flex flex-col items-center">
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
         🌍 Global Breaking News & Headlines
       </h1>
@@ -51,7 +51,7 @@ const Home = () => {
         <select
           value={country}
           onChange={handleCountryChange}
-          className="border border-gray-300 rounded-lg px-4 py-2 w-60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg px-4 py-2 w-60 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="us">United States</option>
           <option value="ng">Nigeria</option>
@@ -64,6 +64,7 @@ const Home = () => {
         </select>
       </div>
 
+      {/* News Display Section */}
       {loading ? (
         <p className="text-center text-gray-500 text-lg">Loading news...</p>
       ) : news.length > 0 ? (

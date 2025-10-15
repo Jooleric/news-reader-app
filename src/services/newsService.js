@@ -1,4 +1,3 @@
-// src/services/newsService.js
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
