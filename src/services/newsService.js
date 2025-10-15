@@ -1,7 +1,7 @@
 // src/services/newsService.js
 import axios from "axios";
 
-const API_KEY = "4cc6ff8bb3d64383b6082ee87d441c45";
+const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 const BASE_URL = "https://newsapi.org/v2/top-headlines";
 
 export const fetchNews = async (country = "us", query = "") => {
