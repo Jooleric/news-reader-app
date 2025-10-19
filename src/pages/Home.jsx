@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// src/pages/Home.jsx
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchNews } from "../services/newsService";
 import NewsList from "../components/NewsList";
 import SearchBar from "../components/SearchBar";
@@ -14,13 +15,13 @@ const Home = () => {
   const [category, setCategory] = useState("general");
   const [loading, setLoading] = useState(true);
 
-  // ✅ Unified fetch function
-  const loadNews = async () => {
+  // ✅ Stable fetch function wrapped in useCallback
+  const loadNews = useCallback(async () => {
     setLoading(true);
     try {
       let articles = await fetchNews({ country, query, category });
 
-      // ✅ Fallback: if no articles, fetch trending ones
+      // ✅ Fallback to trending if no results
       if (articles.length === 0) {
         console.warn(`No news found for ${country}, loading trending...`);
         const trending = await fetchNews({});
@@ -34,12 +35,12 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [country, query, category]);
 
-  // ✅ Load whenever dependencies change
+  // ✅ Trigger fetch whenever dependencies change
   useEffect(() => {
     loadNews();
-  }, [country, query, category]);
+  }, [loadNews]);
 
   // ✅ Handle search
   const handleSearch = (term) => {
@@ -81,12 +82,9 @@ const Home = () => {
       </div>
 
       {/* Category Filter */}
-      <CategoryFilter
-        selected={category}
-        onChange={setCategory}
-      />
+      <CategoryFilter selected={category} onChange={setCategory} />
 
-      {/* Trending News Section */}
+      {/* Trending News */}
       <TrendingNews />
 
       {/* News Section */}

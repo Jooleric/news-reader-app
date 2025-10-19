@@ -1,12 +1,15 @@
+// src/pages/ArticleDetail.jsx
 import React from "react";
-import { fetchNews } from "../services/newsService";
-
 
 const ArticleDetail = () => {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Article Detail Page</h1>
-      <p>Details of a selected article will appear here.</p>
+    <div className="min-h-screen bg-blue-50 p-6 flex flex-col items-center">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 text-center">
+        📰 Article Detail
+      </h1>
+      <p className="text-gray-600 text-center max-w-2xl">
+        Details of a selected article will appear here.
+      </p>
     </div>
   );
 };

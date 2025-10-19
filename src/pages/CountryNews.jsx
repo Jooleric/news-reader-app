@@ -1,5 +1,5 @@
 // src/pages/CountryNews.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchNews } from "../services/newsService";
 import CountrySelector from "../components/CountrySelector";
 import NewsList from "../components/NewsList";
@@ -11,7 +11,8 @@ const CountryNews = () => {
   const [country, setCountry] = useState("us");
   const [loading, setLoading] = useState(true);
 
-  const loadCountryNews = async () => {
+  // ✅ Wrap loadCountryNews in useCallback to avoid ESLint dependency warnings
+  const loadCountryNews = useCallback(async () => {
     setLoading(true);
     try {
       const articles = await fetchNews({ country });
@@ -22,11 +23,12 @@ const CountryNews = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [country]);
 
+  // ✅ Now ESLint will be happy
   useEffect(() => {
     loadCountryNews();
-  }, [country]);
+  }, [loadCountryNews]);
 
   return (
     <div className="min-h-screen bg-blue-50 p-6 flex flex-col items-center">
