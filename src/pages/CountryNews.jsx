@@ -11,7 +11,7 @@ const CountryNews = () => {
   const [country, setCountry] = useState("us");
   const [loading, setLoading] = useState(true);
 
-  // ✅ Wrap loadCountryNews in useCallback to avoid ESLint dependency warnings
+  // ✅ Wrap loadCountryNews in useCallback
   const loadCountryNews = useCallback(async () => {
     setLoading(true);
     try {
@@ -25,7 +25,6 @@ const CountryNews = () => {
     }
   }, [country]);
 
-  // ✅ Now ESLint will be happy
   useEffect(() => {
     loadCountryNews();
   }, [loadCountryNews]);

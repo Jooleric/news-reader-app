@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-blue-50 p-4 sm:p-6 flex flex-col items-center">
       <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 text-gray-800">
-        🌍 Global Breaking News & Headlines
+        🌍 Global News & Headlines
       </h1>
 
       {/* Search & Country Filter */}
