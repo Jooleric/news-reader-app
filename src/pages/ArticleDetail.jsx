@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchNews } from "../services/newsApi";
+import { fetchNews } from "../services/newsService";
 
 
 const ArticleDetail = () => {

@@ -1,44 +1,74 @@
+// src/services/newsService.js
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_NEWS_API_KEY;
 const BASE_URL = "https://newsapi.org/v2/top-headlines";
 
-export const fetchNews = async (country = "us", query = "") => {
+// ✅ Fetch news for search/category/country
+export const fetchNews = async ({ country = "us", query = "", category = "general" } = {}) => {
   try {
-    let params = {
+    const params = {
       apiKey: API_KEY,
       country,
       pageSize: 15,
     };
 
-    // Include search query if provided
-    if (query.trim() !== "") {
-      params.q = query;
-    }
+    // Include category if it's not "general"
+    if (category && category !== "general") params.category = category;
 
-    // First try fetching by country
-    let response = await axios.get(BASE_URL, { params });
+    // Include query if user searched
+    if (query.trim()) params.q = query;
 
-    // Fallback: if no results, fetch global headlines instead
-    if (response.data.articles.length === 0) {
-      console.warn(`No articles found for ${country}, fetching global news...`);
+    const response = await axios.get(BASE_URL, { params });
 
-      // remove country filter and try again
-      params = { apiKey: API_KEY, q: query || "breaking", pageSize: 15 };
-      response = await axios.get(BASE_URL, { params });
-    }
-
-    // Format the news data
-    if (response.data.status === "ok" && response.data.articles.length > 0) {
+    if (response.data.status === "ok") {
       return response.data.articles.map((article) => ({
         ...article,
         publishedAtFormatted: new Date(article.publishedAt).toLocaleString(),
       }));
-    } else {
-      return [];
     }
+
+    console.warn("⚠️ No news found");
+    return [];
   } catch (error) {
-    console.error("Error fetching news:", error);
+    console.error("❌ Error fetching news:", error.message);
+    return [];
+  }
+};
+
+// ✅ Fetch trending news (default: US)
+export const fetchTrendingNews = async (country = "us") => {
+  try {
+    const response = await axios.get(BASE_URL, {
+      params: {
+        apiKey: API_KEY,
+        country,
+        pageSize: 10,
+        category: "general",
+      },
+    });
+
+    if (response.data.status === "ok") {
+      return response.data.articles;
+    }
+
+    console.warn("⚠️ No trending news found");
+    return [];
+  } catch (error) {
+    console.error("❌ Error fetching trending news:", error.message);
+    return [];
+  }
+};
+
+// ✅ Optional: fetch news by country only
+export const fetchCountryCategoryNews = async (country = "us") => {
+  try {
+    const response = await axios.get(BASE_URL, {
+      params: { apiKey: API_KEY, country, pageSize: 12 },
+    });
+    return response.data.articles || [];
+  } catch (error) {
+    console.error("❌ Error fetching country news:", error.message);
     return [];
   }
 };

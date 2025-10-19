@@ -1,3 +1,4 @@
+// src/components/SearchBar.jsx
 import React, { useState } from "react";
 
 const SearchBar = ({ onSearch }) => {
@@ -5,24 +6,40 @@ const SearchBar = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(term);
+    const trimmedTerm = term.trim();
+
+    if (trimmedTerm.toLowerCase().includes("breaking")) {
+      onSearch("breaking-news");
+    } else {
+      onSearch(trimmedTerm);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setTerm(value);
+
+    // Auto-reset when cleared
+    if (value.trim() === "") {
+      onSearch("");
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col md:flex-row items-center gap-3 justify-center mb-6"
+      className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xl"
     >
       <input
         type="text"
-        placeholder="Search for news..."
+        placeholder="Search global news or type 'breaking'..."
         value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        className="border border-gray-300 rounded-lg px-4 py-2 w-64 md:w-80 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        onChange={handleChange}
+        className="border border-gray-300 rounded-lg px-4 py-2 w-72 sm:w-96 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-gray-800 placeholder-gray-400"
       />
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 active:scale-95 transition-transform duration-200"
       >
         Search
       </button>
